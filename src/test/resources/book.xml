@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<bookstore>
+<book category="cooking">
+   <title lang="en">everyDay Italian</title>
+    <author>Giada De Laurentiis</author>
+    <year>2019</year>
+    <price>30.00</price>
+</book>
+    <book category="web">
+        <title lang="en">Mybatis技术内幕</title>
+        <author>Dong</author>
+        <year>2019</year>
+        <price>60.00</price>
+    </book>
+</bookstore>

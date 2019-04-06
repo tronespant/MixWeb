@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mycompant.commonsmodelmybatis.dao.curd.TestDao">
+    <resultMap id="TestEntityResultMap" type="com.mycompant.commonsmodelmybatis.domain.Test">
+        <id property="id" column="id" javaType="String" jdbcType="varchar"></id>
+        <result property="name" column="name" javaType="String" jdbcType="varchar"></result>
+        <result property="status" column="status" javaType="Byte" jdbcType="tinyint"></result>
+        <result property="comment" column="comment" javaType="String" jdbcType="CLOB"></result>
+    </resultMap>
+    <!--用于动态生成sql所需配置-->
+    <sql id="config">
+        <bind name="resultMapId" value="'TestEntityResultMap'"></bind>
+        <bind name="tableName" value="'test'"></bind>
+    </sql>
+    <insert id="insert" parameterType="com.mycompant.commonsmodelmybatis.domain.Test">
+        <include refid="config"></include>
+        <include refid="BasicMapper.buildInsertSql"></include>
+    </insert>
+    <delete id="deleteByPk" parameterType="String">
+       delete from test where id = #{id}
+    </delete>
+    <delete id="delete" parameterType="com.mycompant.commonsmodelmybatis.domain.Test">
+        <include refid="config"></include>
+        <include refid="BasicMapper.buildDeleteSql"></include>
+    </delete>
+    <update id="update" parameterType="com.mycompant.commonsmodelmybatis.domain.Test">
+        <include refid="config"></include>
+        <include refid="BasicMapper.buildUpdateSql"></include>
+    </update>
+    <select id="query" parameterType="com.mycompant.commonsmodelmybatis.domain.Test" resultMap="TestEntityResultMap">
+        <include refid="config"></include>
+        <include refid="BasicMapper.buildQuerySql"></include>
+    </select>
+    <select id="count" parameterType="com.mycompant.commonsmodelmybatis.domain.Test" resultMap="int">
+        <include refid="config"></include>
+        <include refid="BasicMapper.buildTotalSql"></include>
+    </select>
+</mapper>
