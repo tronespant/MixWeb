@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="header/header :: header">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!--顶部布局-->
+    <div class="layui-header" th:insert="commons/basedirect :: title"></div>
+   <!-- 左侧布局-->
+    <div class="layui-side layui-bg-black" th:insert="commons/left :: left"></div>
+    <!--加载内容-->
+     <div class="layui-body layui-tab-content" id="loading" th:insert="commons/loading :: loading"></div>
+   <!--&lt;!&ndash; &lt;!&ndash;底部布局&ndash;&gt;-->
+    <div class="layui-footer" th:insert="commons/footer :: footer"></div>
+</div>
+<script src="layui/layui.js"></script>
+<script>
+    function closeOtherTile(clsLi) {
+        clsLi.setAttribute("class","layui-icon layui-unselect layui-tab-close");
+    }
+    function closeDiv(clsDiv) {
+        clsDiv.setAttribute("class","layui-tab-item");
+    }
+    function closeAllTile() {
+        var titleName=document.getElementsByName("uptitleName");
+        for (var i=0;i<titleName.length;i++){
+            var cl=titleName[i];
+            cl.setAttribute("class","layui-icon layui-unselect layui-tab-close");
+        }
+
+    }
+    function closeAllDiv() {
+        var childNode=document.getElementById("tabcontent").childNodes;
+        for (var k=1;k<childNode.length;k++){
+            var clodiv=childNode[k];
+            clodiv.setAttribute("class","layui-tab-item");
+        }
+    }
+    function dirct(element,path){
+        var titleName=document.getElementsByName("uptitleName");
+        var flag=true;
+        var childNode=document.getElementById("tabcontent").childNodes;
+
+        var point="#"+element;
+        var text=$(point).text();
+        for (var i=0;i<titleName.length;i++){
+            var currLi=titleName[i];
+            var currDiv=childNode[i+1];
+            if (currLi.textContent==text){
+                var di=document.getElementById("pdiv_"+element);
+
+                flag=false;
+                for (var j=0;j<titleName.length;j++){
+                    var clsLi=titleName[j];
+                    var clsDiv=childNode[j+1];
+                    if (i!=j){
+                       closeOtherTile(clsLi);
+                       closeDiv(clsDiv);
+                    }else {
+                        currLi.setAttribute("class","layui-this");
+                        currDiv.setAttribute("class","layui-tab-item layui-show")
+                    }
+                }
+                $("#content").attr("src",path);
+                return;
+            }
+        }
+        if (flag){
+            // var addLi="<li>"+text+"</li>"
+            closeAllTile();
+            var li=document.createElement("li");
+            var textData=document.createTextNode(text);
+            var uptitleName=document.createAttribute("name");
+            var id=document.createAttribute("id");
+            id.value=element;
+            var clss=document.createAttribute("class");
+            clss.value="layui-this";
+            uptitleName.value="uptitleName";
+            li.setAttributeNode(uptitleName);
+            li.setAttributeNode(id);
+            li.appendChild(textData);
+            li.setAttributeNode(clss);
+
+            $("#mainui").append(li);
+            closeAllDiv();
+            //parentPAGE
+            var parentDiv=document.createElement("div");
+            var cls=document.createAttribute("class");
+            cls.value="layui-tab-item layui-show";
+            var pid=document.createAttribute("id");
+            pid.value="pdiv_"+element;
+            parentDiv.setAttributeNode(cls);
+            parentDiv.setAttributeNode(pid);
+            //CREATE IFRAME
+            var iframe=document.createElement("iframe");
+            var id=document.createAttribute("id");
+            id.value="content";
+            iframe.setAttributeNode(id);
+            var height=document.createAttribute("height");
+            height.value=setIframeSize();
+            iframe.setAttributeNode(height);
+            var cls=document.createAttribute("class");
+            cls.value="layui-col-xs12";
+            iframe.setAttributeNode(cls);
+            var onload=document.createAttribute("onload");
+            onload.value="setIframeSize()";
+            iframe.setAttributeNode(onload);
+            var src=document.createAttribute("src");
+            //inject iframe
+            src.value=path;
+            iframe.setAttributeNode(src);
+            parentDiv.appendChild(iframe);
+
+            $("#tabcontent").append(parentDiv);
+        }
+
+    }
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+   /* $(document).ready(function () {
+
+        $("#createActiviti").click(function () {
+                $("#content").attr("src","http://localhost:9999/activiti/create");
+        });
+    });*/
+   function setIframeSize () {
+        var loadBody=document.getElementById("loading");
+        var bBodyHeight=loadBody.clientHeight||loadBody.offsetHeight;
+
+        return bBodyHeight;
+
+    }
+    /*  function getSize() {
+          var loadBody=document.getElementById("loading");
+          var bBody=loadBody.clientHeight||loadBody.offsetHeight;
+          alert(bBody);
+      }*/
+
+</script>
+</body>
+</html>

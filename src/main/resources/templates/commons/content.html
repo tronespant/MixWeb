@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head th:include="header/header :: header">
+</head>
+
+    <div class="layui-tab-item layui-show" th:fragment="content" >
+        <div class="layui-main">
+            <div class="layui-layer-iframe">
+        <iframe class="layui-col-xs12" src="" id="content" scrolling="auto" onload="setIframeSize()" ></iframe>
+      </div>
+        </div>
+    </div>
+
+</html>

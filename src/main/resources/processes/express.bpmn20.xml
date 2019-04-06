@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="express" name="express" isExecutable="true">
+    <documentation>表达式理解</documentation>
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <endEvent id="sid-99DBBFBF-908E-428F-9CAF-8469473F0898"></endEvent>
+    <userTask id="usertask1" name="在用户任务上添加表达式">
+      <extensionElements>
+        <activiti:taskListener event="create" expression="${myBean.invokeTask(task)}"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <serviceTask id="getAuthenticatedUserId" name="获取流程启动人" activiti:expression="${authenticatedUserId}" activiti:resultVariableName="authenticatedUserIdForTest"></serviceTask>
+    <serviceTask id="execExpression" name="计算表达式" activiti:expression="${myBean.print(name)}" activiti:resultVariableName="returnValue"></serviceTask>
+    <serviceTask id="executionExample" name="Execution变量" activiti:expression="${myBean.printBkey(execution)}" activiti:resultVariableName="businessKey"></serviceTask>
+    <sequenceFlow id="sid-C8A485B1-02CF-4C05-8573-6ECBE29384D9" sourceRef="getAuthenticatedUserId" targetRef="execExpression"></sequenceFlow>
+    <sequenceFlow id="sid-40B6787B-0B82-48FC-A089-2518588C14F7" sourceRef="execExpression" targetRef="executionExample"></sequenceFlow>
+    <sequenceFlow id="sid-FEAD02F3-7E7E-4AD3-94C5-615C644B049C" sourceRef="executionExample" targetRef="usertask1"></sequenceFlow>
+    <sequenceFlow id="sid-972356B0-F850-448B-AA74-0CABEF0A55AA" sourceRef="usertask1" targetRef="sid-99DBBFBF-908E-428F-9CAF-8469473F0898"></sequenceFlow>
+    <sequenceFlow id="sid-8E4224C3-8AE5-44BA-813F-4A31EA0219DF" sourceRef="startevent1" targetRef="getAuthenticatedUserId"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_express">
+    <bpmndi:BPMNPlane bpmnElement="express" id="BPMNPlane_express">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="30.0" width="30.0" x="60.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-99DBBFBF-908E-428F-9CAF-8469473F0898" id="BPMNShape_sid-99DBBFBF-908E-428F-9CAF-8469473F0898">
+        <omgdc:Bounds height="28.0" width="28.0" x="960.0" y="131.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask1" id="BPMNShape_usertask1">
+        <omgdc:Bounds height="80.0" width="100.0" x="690.0" y="105.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="getAuthenticatedUserId" id="BPMNShape_getAuthenticatedUserId">
+        <omgdc:Bounds height="80.0" width="100.0" x="165.0" y="105.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="execExpression" id="BPMNShape_execExpression">
+        <omgdc:Bounds height="80.0" width="100.0" x="360.0" y="105.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="executionExample" id="BPMNShape_executionExample">
+        <omgdc:Bounds height="80.0" width="100.0" x="540.0" y="105.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-C8A485B1-02CF-4C05-8573-6ECBE29384D9" id="BPMNEdge_sid-C8A485B1-02CF-4C05-8573-6ECBE29384D9">
+        <omgdi:waypoint x="265.0" y="145.0"></omgdi:waypoint>
+        <omgdi:waypoint x="360.0" y="145.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-8E4224C3-8AE5-44BA-813F-4A31EA0219DF" id="BPMNEdge_sid-8E4224C3-8AE5-44BA-813F-4A31EA0219DF">
+        <omgdi:waypoint x="90.0" y="145.0"></omgdi:waypoint>
+        <omgdi:waypoint x="165.0" y="145.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-40B6787B-0B82-48FC-A089-2518588C14F7" id="BPMNEdge_sid-40B6787B-0B82-48FC-A089-2518588C14F7">
+        <omgdi:waypoint x="460.0" y="145.0"></omgdi:waypoint>
+        <omgdi:waypoint x="540.0" y="145.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-FEAD02F3-7E7E-4AD3-94C5-615C644B049C" id="BPMNEdge_sid-FEAD02F3-7E7E-4AD3-94C5-615C644B049C">
+        <omgdi:waypoint x="640.0" y="145.0"></omgdi:waypoint>
+        <omgdi:waypoint x="690.0" y="145.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-972356B0-F850-448B-AA74-0CABEF0A55AA" id="BPMNEdge_sid-972356B0-F850-448B-AA74-0CABEF0A55AA">
+        <omgdi:waypoint x="790.0" y="145.0"></omgdi:waypoint>
+        <omgdi:waypoint x="960.0" y="145.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
