@@ -1,6 +1,8 @@
 package com.room.mixweb.controller.filter;
 
-import org.apache.catalina.filters.RemoteIpFilter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +14,9 @@ import java.io.IOException;
  * @Date:my Create in 18:42 2019/3/12
  * @Modify by:
  */
-public class MyFilter implements Filter {
 
+public class MyFilter implements Filter {
+    Logger logger=LoggerFactory.getLogger(MyFilter.class);
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         //TODO
@@ -24,6 +27,7 @@ public class MyFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         System.out.println("this is MyFilter url:"+request.getRequestURI());
+        logger.info("this is MyFilter url:"+request.getRequestURI());
         filterChain.doFilter(servletRequest,servletResponse);
     }
 
